@@ -1,13 +1,38 @@
 import React from 'react';
 
 
+const data = [
+   {
+       name: 'egg',
+       protein: 6,
+       fat: 5,
+       carbs: 0.6,
+       calories: 78
+    },
+    {
+       name: 'white rice',
+       protein: 6,
+       fat: 5,
+       carbs: 0.6,
+       calories: 78
+    },
+    {
+       name: 'black beans',
+       protein: 6,
+       fat: 5,
+       carbs: 0.6,
+       calories: 78
+    }
+]
+
 export default class Calc extends React.Component {
 
     constructor(props) {
         super(props);
 
         this.state = {
-
+            foodSelected: null,
+            amountSelected: 0
         }
     }
 
@@ -77,7 +102,7 @@ export default class Calc extends React.Component {
                                             <li>Protein: </li>
                                             <li>Fat: </li>
                                             <li>Carbs: </li>
-                                            <li>Cals: </li>
+                                            <li>Calories: </li>
                                         </ul>
 
 
