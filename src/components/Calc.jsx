@@ -71,7 +71,19 @@ export default class Calc extends React.Component {
                             <h2>Total</h2>
 
                             <div>
+                               <div style={{display: "flex"}}>
+                                   <div style={{flex: "1", padding: "1em 0.5em"}}>
+                                        <ul style={{listStyle: "none", textAlign: "left"}}>
+                                            <li>Protein: </li>
+                                            <li>Fat: </li>
+                                            <li>Carbs: </li>
+                                            <li>Cals: </li>
+                                        </ul>
 
+
+                                    </div>
+
+                                </div>
                             </div>
                         </div>
 
