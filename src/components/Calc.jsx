@@ -49,6 +49,7 @@ export default class Calc extends React.Component {
         this.handleFoodChange = this.handleFoodChange.bind(this);
         this.handleAmountChange = this.handleAmountChange.bind(this);
         this.filteredFoods = this.filteredFoods.bind(this);
+        this.measuredInCups = this.measuredInCups.bind(this);
     }
 
     handleFoodChange(e) {
@@ -62,6 +63,16 @@ export default class Calc extends React.Component {
     filteredFoods() {
       const filtered = data.filter(food => food.name === this.state.selectedFood);
       return filtered
+    }
+
+
+    measuredInCups() {
+        let selectedFoodObj = data.find(food => food.name === this.state.selectedFood);
+
+        if (selectedFoodObj) {
+          return Object.values(selectedFoodObj).includes("cup");
+        }
+
     }
 
     render() {
@@ -87,25 +98,49 @@ export default class Calc extends React.Component {
                                 </div>
                             </div>
 
+                            {this.measuredInCups() ?
+                            <>
+                                        <h2>Amount</h2>
+                                        <div style={{ margin: "1em" }}>
+                                            <div style={{ margin: "1em", display: "flex" }}>
+                                                <select onChange={this.handleAmountChange}style={{ width: "100%", height: "40px", fontSize: "20px" }}>
+                                                    <option value="Quantity">Quantity</option>
 
-                            <h2>Amount</h2>
-                            <div style={{ margin: "1em" }}>
-                                <div style={{ margin: "1em", display: "flex" }}>
-                                    <select onChange={this.handleAmountChange}style={{ width: "100%", height: "40px", fontSize: "20px" }}>
-                                        <option value="Quantity">Quantity</option>
+
+                                                            <>
+                                                                <option value="1">1 cup</option>
+                                                                <option value="2">2 cup</option>
+                                                                <option value="3">3 cup</option>
+                                                                <option value="4">4 cup</option>
+                                                                <option value="5">5 cup</option>
+                                                            </>
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                        </>
+                                :
+                                       <>
+                                        <h2>Amount</h2>
+                                        <div style={{ margin: "1em" }}>
+                                            <div style={{ margin: "1em", display: "flex" }}>
+                                                <select onChange={this.handleAmountChange}style={{ width: "100%", height: "40px", fontSize: "20px" }}>
+                                                    <option value="Quantity">Quantity</option>
 
 
-                                                 <>
-                                                    <option value="1">1</option>
-                                                    <option value="2">2</option>
-                                                    <option value="3">3</option>
-                                                    <option value="4">4</option>
-                                                    <option value="5">5</option>
-                                                 </>
+                                                            <>
+                                                                <option value="1">1</option>
+                                                                <option value="2">2</option>
+                                                                <option value="3">3</option>
+                                                                <option value="4">4</option>
+                                                                <option value="5">5</option>
+                                                            </>
 
-                                    </select>
-                                </div>
-                            </div>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        </>
+                            }
 
 
 
