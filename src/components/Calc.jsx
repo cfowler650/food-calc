@@ -1,27 +1,34 @@
 import React from 'react';
+import _ from 'lodash';
 
 
 const data = [
    {
+       id: 1,
        name: 'egg',
        protein: 6,
        fat: 5,
        carbs: 0.6,
-       calories: 78
+       calories: 78,
+       measurement: "quantity"
     },
     {
+       id: 2,
        name: 'white rice',
-       protein: 6,
+       protein: 8,
        fat: 5,
        carbs: 0.6,
-       calories: 78
+       calories: 78,
+       measurement: "cup"
     },
     {
+       id: 3,
        name: 'black beans',
-       protein: 6,
+       protein: 9,
        fat: 5,
        carbs: 0.6,
-       calories: 78
+       calories: 78,
+       measurement: "cup"
     }
 ]
 
@@ -35,33 +42,31 @@ export default class Calc extends React.Component {
 
         this.state = {
             selectedFood: '',
-            amount: 1
+            amount: 1,
+
         }
 
-        this.generateTotal = this.generateTotal.bind(this);
+        this.handleFoodChange = this.handleFoodChange.bind(this);
+        this.handleAmountChange = this.handleAmountChange.bind(this);
+        this.filteredFoods = this.filteredFoods.bind(this);
     }
 
-   generateTotal(food, amount) {
-        // console.log(food);
-        // console.log(amount);
-        let thisFood = data.find(element => element.name === food )
-        return (
-                <>
-                    <li>Protein: { thisFood.protein * amount} </li>
-                    <li>Fat: { thisFood.fat * amount }</li>
-                    <li>Carbs: { thisFood.carbs * amount }</li>
-                    <li>Calories: { thisFood.calories * amount }</li>
-                </>
-        )
-   }
+    handleFoodChange(e) {
+       this.setState({selectedFood: e.target.value});
+    }
 
-   handleClick() {
-       console.log(this.state.selectedFood)
-   }
+    handleAmountChange(e) {
+        this.setState({...this.state, amount: e.target.value});
+    }
 
+    filteredFoods() {
+      const filtered = data.filter(food => food.name === this.state.selectedFood);
+      return filtered
+    }
 
     render() {
-        const {selectedFood, amount} = this.state;
+
+        const {isMeasuredInCups} = this.state;
         return (
             <div style={{ textAlign: 'center', margin: "2em" }}>
 
@@ -73,8 +78,8 @@ export default class Calc extends React.Component {
                             <h2>Input</h2>
                             <div style={{ margin: "1em" }}>
                                 <div style={{ margin: "1em", display: "flex" }}>
-                                    <select value={selectedFood} onChange={(e) => this.setState({selectedFood: e.target.value})} style={{ width: "100%", height: "40px", fontSize: "20px" }}>
-                                        <option selected value='choose food'>Choose Food</option>
+                                    <select onChange={this.handleFoodChange} style={{ width: "100%", height: "40px", fontSize: "20px" }}>
+                                        <option value="choose food">Chooses Food</option>
                                         <option value="egg">Egg</option>
                                         <option value="black beans">Black Beans</option>
                                         <option value="white rice">White Rice</option>
@@ -83,17 +88,21 @@ export default class Calc extends React.Component {
                             </div>
 
 
-
                             <h2>Amount</h2>
                             <div style={{ margin: "1em" }}>
                                 <div style={{ margin: "1em", display: "flex" }}>
-                                    <select style={{ width: "100%", height: "40px", fontSize: "20px" }}>
-                                        <option disabled selected value="volvo">Quantity</option>
-                                        <option value="volvo">1</option>
-                                        <option value="saab">2</option>
-                                        <option value="mercedes">3</option>
-                                        <option value="mercedes">4</option>
-                                        <option value="mercedes">5</option>
+                                    <select onChange={this.handleAmountChange}style={{ width: "100%", height: "40px", fontSize: "20px" }}>
+                                        <option value="Quantity">Quantity</option>
+
+
+                                                 <>
+                                                    <option value="1">1</option>
+                                                    <option value="2">2</option>
+                                                    <option value="3">3</option>
+                                                    <option value="4">4</option>
+                                                    <option value="5">5</option>
+                                                 </>
+
                                     </select>
                                 </div>
                             </div>
@@ -110,7 +119,7 @@ export default class Calc extends React.Component {
                             boxShadow: "2px 2px 2px 1px rgba(0, 0, 0, 0.2)",
                             backgroundColor: "teal",
                             color: "white" }}
-                            onClick={() => {this.handleClick()}}>
+                            >
                                 Add </button>
 
                         </div>
@@ -124,27 +133,25 @@ export default class Calc extends React.Component {
                                <div style={{display: "flex"}}>
                                    <div style={{flex: "1", padding: "1em 0.5em"}}>
                                         <ul style={{listStyle: "none", textAlign: "left"}}>
-                                            {
-                                                selectedFood !== '' ?
-                                                  this.generateTotal(selectedFood, amount)
-                                                  :
-                                                 <>
-                                                    {/* <li>Protein</li>
-                                                    <li>Fat</li>
-                                                    <li>Carbs</li>
-                                                    <li>Calories</li> */}
-                                                  </>
 
-
-                                            }
-
-
-
+                                            {this.filteredFoods().map(food => (
+                                                <>
+                                                    <li key={1}>
+                                                        Protein: {Math.floor(food.protein * this.state.amount)}g
+                                                    </li>
+                                                    <li key={2}>
+                                                        Fat: {Math.floor(food.fat * this.state.amount)}g
+                                                    </li>
+                                                    <li key={3}>
+                                                        Carbs: {Math.floor(food.carbs * this.state.amount)}g
+                                                    </li>
+                                                    <li key={4}>
+                                                        Calories: {Math.floor(food.calories * this.state.amount)}
+                                                    </li>
+                                                </>
+                                            ))}
                                         </ul>
-
-
-                                    </div>
-
+                                   </div>
                                 </div>
                             </div>
                         </div>
